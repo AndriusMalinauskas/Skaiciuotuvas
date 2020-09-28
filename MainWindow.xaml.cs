@@ -208,7 +208,7 @@ namespace Skaiciuotuvas
             {
                 if (Input.Last() == '+' || Input.Last() == '-' || Input.Last() == '*' || Input.Last() == '/')
                 {
-                   PirmasDemuo = double.Parse(Screen.Text);
+                   //PirmasDemuo = double.Parse(Screen.Text);
                     Screen.Text = "";
                     Screen.Text = $"{numberButton}";
                     Input += numberButton;
