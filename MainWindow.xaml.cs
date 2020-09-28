@@ -25,13 +25,12 @@ namespace Skaiciuotuvas
         public double Rezultatas { get; set; }
         public string MathAction { get; set; }
         public string Input { get; set; }
-        public string CountingIput { get; set; }
-        public List<string> Counting { get; set; } = new List<string>();
+        public string CountingInput { get; set; }
+        public List<string> Counting { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            
         }
 
         private void Button0_Click(object sender, RoutedEventArgs e)
@@ -46,7 +45,7 @@ namespace Skaiciuotuvas
 
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            ValueButtons('2');;
+            ValueButtons('2'); ;
         }
 
         private void Button3_Click(object sender, RoutedEventArgs e)
@@ -90,7 +89,7 @@ namespace Skaiciuotuvas
             {
                 ValueButtons('.');
             }
-            
+
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
@@ -112,40 +111,15 @@ namespace Skaiciuotuvas
         {
             ActionButton("/");
         }
-  
+
         private void EqualButton_Click(object sender, RoutedEventArgs e)
         {
             if (Screen.Text != "" && PirmasDemuo != null)
             {
-                CountingIput = Input;
-                CountingIput += Screen.Text;
-                AntrasDemuo = double.Parse(Screen.Text);
-                switch (MathAction)
-                {
-                    case "+":
-                        Rezultatas = PirmasDemuo + AntrasDemuo;
-                        Screen.Text = $"{Rezultatas}";
-                        PirmasDemuo = Rezultatas;
-                        break;
-                    case "-":
-                        Rezultatas = PirmasDemuo - AntrasDemuo;
-                        Screen.Text = $"{Rezultatas}";
-                        PirmasDemuo = Rezultatas;
-                        break;
-                    case "*":
-                        Rezultatas = PirmasDemuo * AntrasDemuo;
-                        Screen.Text = $"{Rezultatas}";
-                        PirmasDemuo = Rezultatas;
-                        break;
-                    case "/":
-                        Rezultatas = PirmasDemuo / AntrasDemuo;
-                        Screen.Text = $"{Rezultatas}";
-                        PirmasDemuo = Rezultatas;
-                        break;
-                    default:
-                        break;
-
-                }              
+               
+                AntrasDemuo = double.Parse(Screen.Text);             
+                Counting = Sequence(CountingInput);
+                Rezultatas = double.Parse(Rezult(Counting));
                 Input += '=';
                 Input += $"{Rezultatas}";
                 History.Text = Input;
@@ -153,6 +127,8 @@ namespace Skaiciuotuvas
                 PirmasDemuo = Rezultatas;
                 MathAction = null;
                 Input = $" {History.Text} \n {Rezultatas}";
+                CountingInput = $"{Rezultatas}";
+                bandom.Text = CountingInput;
             }
         }
 
@@ -163,9 +139,10 @@ namespace Skaiciuotuvas
             Screen.Text = "";
             MathAction = "";
             Input = $" {History.Text} \n";
+            CountingInput = "";
 
         }
-       
+
         private void ActionButton(string mathaction)
         {
             if (Screen.Text != "")
@@ -174,21 +151,24 @@ namespace Skaiciuotuvas
                 {
                     Input = Input.TrimEnd(Input.Last());
                     Input += mathaction;
+                    CountingInput = Input.TrimEnd(Input.Last());
+                    CountingInput += mathaction;
                     History.Text = Input;
-                    MathAction = $"{mathaction}";                  
+                    MathAction = $"{mathaction}";
                 }
                 else
                 {
                     Input += $"{mathaction}";
+                    CountingInput += $"{mathaction}";
                     PirmasDemuo = double.Parse(Screen.Text);
                     MathAction = $"{mathaction}";
                     History.Text = Input;
                 }
-               
+
             }
-           
+
         }
-       
+
         private void ValueButtons(char numberButton)
         {
             if (Screen.Text == "")
@@ -197,21 +177,24 @@ namespace Skaiciuotuvas
                 {
                     Screen.Text = $"{Screen.Text}{numberButton}";
                     Input += numberButton;
+                    CountingInput += numberButton;
                 }
                 else
                 {
                     Screen.Text = $"0.";
                     Input += "0.";
+                    CountingInput += "0.";
                 }
             }
             else
             {
                 if (Input.Last() == '+' || Input.Last() == '-' || Input.Last() == '*' || Input.Last() == '/')
                 {
-                   PirmasDemuo = double.Parse(Screen.Text);
+                   // PirmasDemuo = double.Parse(Screen.Text);
                     Screen.Text = "";
                     Screen.Text = $"{numberButton}";
                     Input += numberButton;
+                    CountingInput += numberButton;
                 }
                 else
                 {
@@ -219,17 +202,103 @@ namespace Skaiciuotuvas
                     {
                         Screen.Text = $"{numberButton}";
                         Input = Input.TrimEnd(Input.Last());
+                        CountingInput = Input.TrimEnd(Input.Last());
                         Input += numberButton;
+                        CountingInput += numberButton;
                         History.Text = Input;
                     }
                     else
                     {
                         Screen.Text = $"{Screen.Text}{numberButton}";
                         Input += numberButton;
-                    }  
-                }        
+                        CountingInput += numberButton;
+                    }
+                }
             }
             History.Text = Input;
-        }      
+        }
+
+        private List<string> Sequence(string countingSequence)
+        {
+            var member = "";
+            List<string> Counting = new List<string>();
+            foreach (var item in countingSequence)
+            {
+               
+                if (item == '+' || item == '-' || item == '*' || item == '/')
+                {
+                    Counting.Add(member);
+                    Counting.Add($"{ item}");
+                    member = "";
+                }
+                else
+                {
+                    member += item;
+                }
+            }       
+            Counting.Add(member);
+            if (countingSequence[0] == '-')
+            {
+                Counting.Remove(Counting[0]);
+                Counting.Remove(Counting[0]);
+                Counting[0] = $"-{Counting[0]}";
+            }
+            return Counting;
+
+        }
+
+        private string Rezult(List<string> counting)
+        {
+            while (counting.Count > 1)
+            {
+                if (counting.Contains("*"))
+                {
+                    int index = counting.IndexOf(counting.First(a => a.Contains("*")));
+                    var rezult = (double.Parse(counting[index - 1]) * double.Parse(counting[index + 1]));
+                    counting[index - 1] = $"{rezult}";
+                    counting.Remove(counting[index + 1]);
+                    counting.Remove(counting[index]);
+                }
+                else
+                {
+                    if (counting.Contains("/"))
+                    {
+                        int index = counting.IndexOf(counting.First(a => a.Contains("/")));
+                        var rezult = (double.Parse(counting[index - 1]) / double.Parse(counting[index + 1]));
+                        counting[index - 1] = $"{rezult}";
+                        counting.Remove(counting[index + 1]);
+                        counting.Remove(counting[index]);
+                    }
+                    else
+                    {
+                        if (counting.Contains("+"))
+                        {
+                            int index = counting.IndexOf(counting.First(a => a.Contains("+")));
+                            var rezult = (double.Parse(counting[index - 1]) + double.Parse(counting[index + 1]));
+                            counting[index - 1] = $"{rezult}";
+                            counting.Remove(counting[index + 1]);
+                            counting.Remove(counting[index]);
+                        }
+                        else
+                        {
+                            if (counting.Contains("-"))
+                            {
+                                int index = counting.IndexOf(counting.First(a => a == "-"));
+                                var rezult = (double.Parse(counting[index - 1]) - double.Parse(counting[index + 1]));
+                                counting[index - 1] = $"{rezult}";
+                                counting.Remove(counting[index + 1]);
+                                counting.Remove(counting[index]);
+                            }
+
+                        }
+
+                    }
+                }
+            }
+            var finalRezult = counting[0];
+            return finalRezult;
+
+
+        }
     }
 }
