@@ -1,0 +1,31 @@
+﻿<Window x:Class="Skaiciuotuvas.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Skaiciuotuvas"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="334" Width="550">
+    <Grid>
+        <TextBox x:Name="Screen" HorizontalAlignment="Left" Height="42" Margin="35,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" FontSize="18"/>
+        <Button x:Name="Button7" Content="7" HorizontalAlignment="Left" Height="36" Margin="35,98,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button7_Click"/>
+        <Button x:Name="Button8" Content="8" HorizontalAlignment="Left" Height="36" Margin="82,98,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button8_Click"/>
+        <Button x:Name="Button9" Content="9" HorizontalAlignment="Left" Height="36" Margin="129,98,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button9_Click"/>
+        <Button x:Name="Button4" Content="4" HorizontalAlignment="Left" Height="36" Margin="35,145,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button4_Click"/>
+        <Button x:Name="Button1" Content="1" HorizontalAlignment="Left" Height="36" Margin="35,192,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button1_Click"/>
+        <Button x:Name="Button5" Content="5" HorizontalAlignment="Left" Height="36" Margin="82,145,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button5_Click"/>
+        <Button x:Name="Button2" Content="2" HorizontalAlignment="Left" Height="36" Margin="82,192,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button2_Click"/>
+        <Button x:Name="Button6" Content="6" HorizontalAlignment="Left" Height="36" Margin="129,145,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button6_Click"/>
+        <Button x:Name="Button3" Content="3" HorizontalAlignment="Left" Height="36" Margin="129,192,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button3_Click"/>
+        <Button x:Name="EqualButton" Content="=" HorizontalAlignment="Left" Height="36" Margin="35,239,0,0" VerticalAlignment="Top" Width="36" FontSize="24" Click="EqualButton_Click"/>
+        <Button x:Name="Button0" Content="0" HorizontalAlignment="Left" Height="36" Margin="82,239,0,0" VerticalAlignment="Top" Width="36" FontSize="18" Click="Button0_Click"/>
+        <Button x:Name="ButtonComma" Content="." HorizontalAlignment="Left" Height="36" Margin="129,239,0,0" VerticalAlignment="Top" Width="36" FontSize="24" Click="ButtonComma_Click"/>
+        <Button x:Name="PlusButton" Content="+" HorizontalAlignment="Left" Height="36" Margin="176,98,0,0" VerticalAlignment="Top" Width="36" FontSize="24" Click="PlusButton_Click"/>
+        <Button x:Name="MinusButton" Content="-" HorizontalAlignment="Left" Height="36" Margin="176,145,0,0" VerticalAlignment="Top" Width="36" FontSize="24" Click="MinusButton_Click"/>
+        <Button x:Name="MultiplyButton" Content="*" HorizontalAlignment="Left" Height="36" Margin="176,192,0,0" VerticalAlignment="Top" Width="36" FontSize="24" Click="MultiplyButton_Click"/>
+        <Button x:Name="DevideButton" Content="/" HorizontalAlignment="Left" Height="36" Margin="176,239,0,0" VerticalAlignment="Top" Width="36" FontSize="24" Click="DevideButton_Click"/>
+        <Button x:Name="ClearButton" Content="C" HorizontalAlignment="Left" Height="36" Margin="223,98,0,0" VerticalAlignment="Top" Width="36" Click="ClearButton_Click"/>
+        <TextBlock x:Name="History" HorizontalAlignment="Left" Height="177" Margin="264,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
+
+    </Grid>
+</Window>
