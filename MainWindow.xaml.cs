@@ -123,10 +123,10 @@ namespace Skaiciuotuvas
                 Input += '=';
                 Input += $"{Rezultatas}";
                 History.Text = Input;
+                Input = $" {History.Text} \n {Rezultatas}";
                 Screen.Text = $"{Rezultatas}";
                 PirmasDemuo = Rezultatas;
-                MathAction = null;
-                Input = $" {History.Text} \n {Rezultatas}";
+                MathAction = null;          
                 CountingInput = $"{Rezultatas}";
                 bandom.Text = CountingInput;
             }
@@ -140,7 +140,6 @@ namespace Skaiciuotuvas
             MathAction = "";
             Input = $" {History.Text} \n";
             CountingInput = "";
-
         }
 
         private void ActionButton(string mathaction)
@@ -151,7 +150,7 @@ namespace Skaiciuotuvas
                 {
                     Input = Input.TrimEnd(Input.Last());
                     Input += mathaction;
-                    CountingInput = Input.TrimEnd(Input.Last());
+                    CountingInput = CountingInput.TrimEnd(CountingInput.Last());
                     CountingInput += mathaction;
                     History.Text = Input;
                     MathAction = $"{mathaction}";
@@ -164,9 +163,7 @@ namespace Skaiciuotuvas
                     MathAction = $"{mathaction}";
                     History.Text = Input;
                 }
-
             }
-
         }
 
         private void ValueButtons(char numberButton)
@@ -202,7 +199,7 @@ namespace Skaiciuotuvas
                     {
                         Screen.Text = $"{numberButton}";
                         Input = Input.TrimEnd(Input.Last());
-                        CountingInput = Input.TrimEnd(Input.Last());
+                        CountingInput = CountingInput.TrimEnd(CountingInput.Last());
                         Input += numberButton;
                         CountingInput += numberButton;
                         History.Text = Input;
@@ -289,16 +286,33 @@ namespace Skaiciuotuvas
                                 counting.Remove(counting[index + 1]);
                                 counting.Remove(counting[index]);
                             }
-
                         }
-
                     }
                 }
             }
             var finalRezult = counting[0];
             return finalRezult;
+        }
 
-
+        private void BackSpaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Screen.Text != "")
+            {
+                if (!(Input.Last() == '+' || Input.Last() == '-' || Input.Last() == '*' || Input.Last() == '/'))
+                {
+                    Input = Input.Substring(0, Input.Length-1);
+                    CountingInput = CountingInput.Substring(0, CountingInput.Length-1);
+                    History.Text = Input;
+                    Screen.Text = Screen.Text.Substring(0, Screen.Text.Length - 1);
+                    if (Screen.Text == "-")
+                    {
+                        Screen.Text = "";
+                        Input = Input.Substring(0, Input.Length - 1);
+                        CountingInput = CountingInput.Substring(0, CountingInput.Length - 1);
+                        History.Text = Input;
+                    }
+                }
+            }
         }
     }
 }
