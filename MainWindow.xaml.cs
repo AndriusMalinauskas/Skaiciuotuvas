@@ -248,7 +248,7 @@ namespace Skaiciuotuvas
             {
                 if (counting.Contains("*"))
                 {
-                    int index = counting.IndexOf(counting.First(a => a == "*"));
+                    int index = counting.IndexOf(counting.First(a => a.Contains("*")));
                     var rezult = (double.Parse(counting[index - 1]) * double.Parse(counting[index + 1]));
                     counting[index - 1] = $"{rezult}";
                     counting.RemoveRange(index, 2);
