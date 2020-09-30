@@ -26,7 +26,6 @@
         <Button x:Name="DevideButton" Content="/" HorizontalAlignment="Left" Height="36" Margin="176,239,0,0" VerticalAlignment="Top" Width="36" FontSize="24" Click="DevideButton_Click"/>
         <Button x:Name="ClearButton" Content="C" HorizontalAlignment="Left" Height="36" Margin="223,98,0,0" VerticalAlignment="Top" Width="36" Click="ClearButton_Click"/>
         <TextBlock x:Name="History" HorizontalAlignment="Left" Height="177" Margin="264,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
-        <TextBlock x:Name="bandom" HorizontalAlignment="Left" Height="50" Margin="212,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271"/>
         <Button x:Name="BackSpaceButton"  HorizontalAlignment="Left" Height="36" Margin="223,145,0,0" VerticalAlignment="Top" Width="36" Background="#FFE2E2E2" Content="BS" Click="BackSpaceButton_Click"/>
 
     </Grid>

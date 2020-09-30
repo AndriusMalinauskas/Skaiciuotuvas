@@ -115,8 +115,7 @@ namespace Skaiciuotuvas
         private void EqualButton_Click(object sender, RoutedEventArgs e)
         {
             if (Screen.Text != "" && PirmasDemuo != null)
-            {
-               
+            {           
                 AntrasDemuo = double.Parse(Screen.Text);             
                 Counting = Sequence(CountingInput);
                 Rezultatas = double.Parse(Rezult(Counting));
@@ -128,7 +127,6 @@ namespace Skaiciuotuvas
                 PirmasDemuo = Rezultatas;
                 MathAction = null;          
                 CountingInput = $"{Rezultatas}";
-                bandom.Text = CountingInput;
             }
         }
 
@@ -250,11 +248,10 @@ namespace Skaiciuotuvas
             {
                 if (counting.Contains("*"))
                 {
-                    int index = counting.IndexOf(counting.First(a => a.Contains("*")));
+                    int index = counting.IndexOf(counting.First(a => a == "*"));
                     var rezult = (double.Parse(counting[index - 1]) * double.Parse(counting[index + 1]));
                     counting[index - 1] = $"{rezult}";
-                    counting.Remove(counting[index + 1]);
-                    counting.Remove(counting[index]);
+                    counting.RemoveRange(index, 2);
                 }
                 else
                 {
@@ -263,8 +260,7 @@ namespace Skaiciuotuvas
                         int index = counting.IndexOf(counting.First(a => a.Contains("/")));
                         var rezult = (double.Parse(counting[index - 1]) / double.Parse(counting[index + 1]));
                         counting[index - 1] = $"{rezult}";
-                        counting.Remove(counting[index + 1]);
-                        counting.Remove(counting[index]);
+                        counting.RemoveRange(index, 2);
                     }
                     else
                     {
@@ -273,8 +269,7 @@ namespace Skaiciuotuvas
                             int index = counting.IndexOf(counting.First(a => a.Contains("+")));
                             var rezult = (double.Parse(counting[index - 1]) + double.Parse(counting[index + 1]));
                             counting[index - 1] = $"{rezult}";
-                            counting.Remove(counting[index + 1]);
-                            counting.Remove(counting[index]);
+                            counting.RemoveRange(index, 2);
                         }
                         else
                         {
@@ -283,8 +278,7 @@ namespace Skaiciuotuvas
                                 int index = counting.IndexOf(counting.First(a => a == "-"));
                                 var rezult = (double.Parse(counting[index - 1]) - double.Parse(counting[index + 1]));
                                 counting[index - 1] = $"{rezult}";
-                                counting.Remove(counting[index + 1]);
-                                counting.Remove(counting[index]);
+                                counting.RemoveRange(index, 2);
                             }
                         }
                     }
