@@ -20,11 +20,7 @@ namespace Skaiciuotuvas
     /// </summary>
     public partial class MainWindow : Window
     {
-        public double PirmasDemuo { get; set; }
-        public double AntrasDemuo { get; set; }
         public double Rezultatas { get; set; }
-        public string MathAction { get; set; }
-        public string Input { get; set; }
         public string CountingInput { get; set; }
         public List<string> Counting { get; set; }
 
@@ -114,29 +110,22 @@ namespace Skaiciuotuvas
 
         private void EqualButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Screen.Text != "" && PirmasDemuo != null)
-            {           
-                AntrasDemuo = double.Parse(Screen.Text);             
+            if (Screen.Text != "")
+            {                      
                 Counting = Sequence(CountingInput);
                 Rezultatas = double.Parse(Rezult(Counting));
-                Input += '=';
-                Input += $"{Rezultatas}";
-                History.Text = Input;
-                Input = $" {History.Text} \n {Rezultatas}";
-                Screen.Text = $"{Rezultatas}";
-                PirmasDemuo = Rezultatas;
-                MathAction = null;          
+                History.Text += '=';
+                History.Text += Rezultatas;
+                History.Text += $"\n{Rezultatas}";
+                Screen.Text = $"{Rezultatas}";   
                 CountingInput = $"{Rezultatas}";
             }
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            PirmasDemuo = 0;
-            AntrasDemuo = 0;
             Screen.Text = "";
-            MathAction = "";
-            Input = $" {History.Text} \n";
+            History.Text = $"{History.Text}\n";
             CountingInput = "";
         }
 
@@ -144,22 +133,17 @@ namespace Skaiciuotuvas
         {
             if (Screen.Text != "")
             {
-                if (Input.Last() == '+' || Input.Last() == '-' || Input.Last() == '*' || Input.Last() == '/')
+                if (CountingInput.Last() == '+' || CountingInput.Last() == '-' || CountingInput.Last() == '*' || CountingInput.Last() == '/')
                 {
-                    Input = Input.TrimEnd(Input.Last());
-                    Input += mathaction;
+                    History.Text = History.Text.TrimEnd(History.Text.Last());
+                    History.Text += mathaction;
                     CountingInput = CountingInput.TrimEnd(CountingInput.Last());
                     CountingInput += mathaction;
-                    History.Text = Input;
-                    MathAction = $"{mathaction}";
                 }
                 else
                 {
-                    Input += $"{mathaction}";
-                    CountingInput += $"{mathaction}";
-                    PirmasDemuo = double.Parse(Screen.Text);
-                    MathAction = $"{mathaction}";
-                    History.Text = Input;
+                    History.Text += mathaction;
+                    CountingInput += mathaction;
                 }
             }
         }
@@ -171,24 +155,23 @@ namespace Skaiciuotuvas
                 if (Screen.Text == "" && numberButton != '.')
                 {
                     Screen.Text = $"{Screen.Text}{numberButton}";
-                    Input += numberButton;
+                    History.Text += numberButton;
                     CountingInput += numberButton;
                 }
                 else
                 {
                     Screen.Text = $"0.";
-                    Input += "0.";
+                    History.Text += "0.";
                     CountingInput += "0.";
                 }
             }
             else
             {
-                if (Input.Last() == '+' || Input.Last() == '-' || Input.Last() == '*' || Input.Last() == '/')
+                if (CountingInput.Last() == '+' || CountingInput.Last() == '-' || CountingInput.Last() == '*' || CountingInput.Last() == '/')
                 {
-                   // PirmasDemuo = double.Parse(Screen.Text);
                     Screen.Text = "";
                     Screen.Text = $"{numberButton}";
-                    Input += numberButton;
+                    History.Text += numberButton;
                     CountingInput += numberButton;
                 }
                 else
@@ -196,30 +179,32 @@ namespace Skaiciuotuvas
                     if (Screen.Text == "0" && numberButton != '.')
                     {
                         Screen.Text = $"{numberButton}";
-                        Input = Input.TrimEnd(Input.Last());
+                        History.Text = History.Text.TrimEnd(History.Text.Last());
                         CountingInput = CountingInput.TrimEnd(CountingInput.Last());
-                        Input += numberButton;
+                        History.Text += numberButton;
                         CountingInput += numberButton;
-                        History.Text = Input;
                     }
                     else
                     {
                         Screen.Text = $"{Screen.Text}{numberButton}";
-                        Input += numberButton;
+                        History.Text += numberButton;
                         CountingInput += numberButton;
                     }
                 }
             }
-            History.Text = Input;
         }
 
         private List<string> Sequence(string countingSequence)
         {
+            if (countingSequence.Last() == '+' || countingSequence.Last() == '-' || countingSequence.Last() == '*' || countingSequence.Last() == '/')
+            {
+                countingSequence += Screen.Text;
+             
+            }
             var member = "";
             List<string> Counting = new List<string>();
             foreach (var item in countingSequence)
-            {
-               
+            {             
                 if (item == '+' || item == '-' || item == '*' || item == '/')
                 {
                     Counting.Add(member);
@@ -237,7 +222,7 @@ namespace Skaiciuotuvas
                 Counting.Remove(Counting[0]);
                 Counting.Remove(Counting[0]);
                 Counting[0] = $"-{Counting[0]}";
-            }
+            }         
             return Counting;
 
         }
@@ -292,18 +277,16 @@ namespace Skaiciuotuvas
         {
             if (Screen.Text != "")
             {
-                if (!(Input.Last() == '+' || Input.Last() == '-' || Input.Last() == '*' || Input.Last() == '/'))
+                if (!(CountingInput.Last() == '+' || CountingInput.Last() == '-' || CountingInput.Last() == '*' || CountingInput.Last() == '/'))
                 {
-                    Input = Input.Substring(0, Input.Length-1);
                     CountingInput = CountingInput.Substring(0, CountingInput.Length-1);
-                    History.Text = Input;
+                    History.Text = History.Text.Substring(0, History.Text.Length - 1);
                     Screen.Text = Screen.Text.Substring(0, Screen.Text.Length - 1);
                     if (Screen.Text == "-")
                     {
                         Screen.Text = "";
-                        Input = Input.Substring(0, Input.Length - 1);
                         CountingInput = CountingInput.Substring(0, CountingInput.Length - 1);
-                        History.Text = Input;
+                        History.Text = History.Text.Substring(0, History.Text.Length - 1);
                     }
                 }
             }
